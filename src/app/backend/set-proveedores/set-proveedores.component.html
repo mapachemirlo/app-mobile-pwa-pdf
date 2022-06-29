@@ -1,0 +1,168 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title class="subtitulo ion-text-wrap ion-text-center">
+            Proveedores
+        </ion-title>
+
+        <ion-buttons slot="start">
+            <ion-button (click)="openMenu()">
+                <ion-icon color="light" slot="icon-only" name="ellipsis-horizontal-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <ion-buttons slot="end">
+            <ion-button (click)="nuevo()">
+                <ion-icon color="light" slot="icon-only" name="add-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <div *ngIf="enableNewProveedor">
+
+        <ion-buttons class="back" slot="start">
+            <ion-button (click)="enableNewProveedor = false">
+                <ion-icon name="arrow-back-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        
+        <h3 class="subtitulo encabezado ion-text-center ion-margin">Datos del proveedor</h3>
+
+        <ion-item>
+            <ion-label color="danger" position="floating">
+                Empresa
+            </ion-label>
+            <ion-input [(ngModel)]="newProveedor.nombreEmpresa" type="text" inputmode="text" placeholder="Sodimac">
+            </ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label color="danger" position="floating">
+                Puesto en empresa
+            </ion-label>
+            <ion-input [(ngModel)]="newProveedor.nombreRepresentante" type="text" inputmode="text" placeholder="Supervisor">
+            </ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label color="danger" position="floating">
+                Apellido
+            </ion-label>
+            <ion-input [(ngModel)]="newProveedor.apellido" type="text" inputmode="text" placeholder="L&oacute;pez">
+            </ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label color="danger" position="floating">
+                Nombre
+            </ion-label>
+            <ion-input [(ngModel)]="newProveedor.nombre" type="text" inputmode="text" placeholder="Lisandro">
+            </ion-input>
+        </ion-item>
+
+
+        <ion-item>
+            <ion-label color="danger" position="floating">
+                Tel&eacute;fono 1
+            </ion-label>
+            <ion-input [(ngModel)]="newProveedor.telefono1" type="number" inputmode="numeric" placeholder="1122334455">
+            </ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label color="danger" position="floating">
+                Tel&eacute;fono 2
+            </ion-label>
+            <ion-input [(ngModel)]="newProveedor.telefono2" type="number" inputmode="numeric" placeholder="02204850099">
+            </ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label color="danger" position="floating">
+                Email
+            </ion-label>
+            <ion-input [(ngModel)]="newProveedor.email" type="email" inputmode="email" placeholder="lisandro@gmail.com">
+            </ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label color="danger" position="floating">
+                Direcci&oacute;n
+            </ion-label>
+            <ion-input [(ngModel)]="newProveedor.direccion" type="text" inputmode="text" placeholder="Av. Pte. Per&oacute;n 23445">
+            </ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label color="danger" position="floating">
+                Localidad
+            </ion-label>
+            <ion-input [(ngModel)]="newProveedor.localidad" type="text" inputmode="text" placeholder="Jun&iacute;n">
+            </ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label color="danger" position="floating">
+                Provincia
+            </ion-label>
+            <ion-input [(ngModel)]="newProveedor.provincia" type="text" inputmode="text" placeholder="Buenos Aires">
+            </ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label color="danger" position="floating">
+                Pa&iacute;s
+            </ion-label>
+            <ion-input [(ngModel)]="newProveedor.pais" type="text" inputmode="text" placeholder="Argentina">
+            </ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label color="danger" position="floating">
+                Notas
+            </ion-label>
+            <ion-textarea [(ngModel)]="newProveedor.notas" type="text" inputmode="text" placeholder="Ofertas de martes a jueves de 08 a 13hs">
+            </ion-textarea>
+        </ion-item>
+
+        <ion-item>
+            <ion-label color="danger" position="floating">
+                Atenci&oacute;n
+            </ion-label>
+            <ion-input [(ngModel)]="newProveedor.atencion" type="text" inputmode="text" placeholder="Lun a vie de 08 a 17hs">
+            </ion-input>
+        </ion-item>
+
+        <div class="ion-text-center ion-margin-top ion-margin-bottom">
+            <ion-button style="margin-right: 3%;" color="danger" fill="outline" (click)="enableNewProveedor = false">
+                cancelar
+                <ion-icon color="danger" slot="start" name="close"></ion-icon>
+            </ion-button>
+    
+            <ion-button color="danger"  (click)="guardarProveedor()">
+                guardar
+                <ion-icon color="light" slot="start" name="save-outline"></ion-icon>
+            </ion-button>
+        </div>
+
+    </div>
+
+    <div *ngIf="!enableNewProveedor">
+        <ion-text color="danger">
+            <h3 class="subtitulo encabezado ion-text-center ion-margin">Lista de proveedores</h3>
+        </ion-text>
+        
+        <ion-item *ngFor="let proveedor of proveedores">
+            <ion-label class="normal"> {{proveedor.nombre}} {{proveedor.apellido}} </ion-label>
+            <ion-buttons slot="end">
+                <ion-button (click)=" newProveedor =  proveedor; enableNewProveedor = true; ">
+                    <ion-icon slot="icon-only" color="dark" name="create-outline"></ion-icon>
+                </ion-button>
+                <ion-button (click)="deleteProveedor(proveedor)">
+                    <ion-icon slot="icon-only" color="danger" name="trash-outline"></ion-icon>
+                </ion-button>
+            </ion-buttons>
+        </ion-item>
+    </div>
+
+</ion-content>

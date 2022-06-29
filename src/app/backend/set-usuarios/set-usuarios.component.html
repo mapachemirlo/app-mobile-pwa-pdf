@@ -1,0 +1,159 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title class="subtitulo ion-text-wrap ion-text-center">
+            Usuarios
+        </ion-title>
+
+        <ion-buttons slot="start">
+            <ion-button (click)="openMenu()">
+                <ion-icon color="light" slot="icon-only" name="ellipsis-horizontal-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+
+        <ion-buttons slot="end">
+            <ion-button>
+                <!-- <ion-icon slot="icon-only" color="light" name="create-outline"></ion-icon> -->
+            </ion-button>
+        </ion-buttons>
+
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <div *ngIf="enableEditUsuario">
+
+        <ion-buttons class="back" slot="start">
+            <ion-button (click)="enableEditUsuario = false">
+                <ion-icon name="arrow-back-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+
+        <h3 class="subtitulo encabezado ion-text-center ion-margin">Datos del usuario</h3>
+
+        
+            <ion-item>
+                <ion-label color="danger" position="floating">
+                    Email
+                </ion-label>
+                <ion-input [(ngModel)]="newUsuario.email" type="email" inputmode="email">             
+                </ion-input>
+            </ion-item>          
+
+
+        <ion-item>
+            <ion-label color="danger" position="floating">
+                Apellido
+            </ion-label>
+            <ion-input [(ngModel)]="newUsuario.apellido" type="text" inputmode="text">
+            </ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label color="danger" position="floating">
+                Nombre
+            </ion-label>
+            <ion-input [(ngModel)]="newUsuario.nombre" type="text" inputmode="text">
+            </ion-input>
+        </ion-item>
+
+       
+
+        <ion-item>
+            <ion-label color="danger" position="floating">
+                Tel&eacute;fono 1:
+            </ion-label>
+            <ion-input [(ngModel)]="newUsuario.telefono1" type="number" inputmode="numeric">
+            </ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label color="danger" position="floating">
+                Tel&eacute;fono 2
+            </ion-label>
+            <ion-input [(ngModel)]="newUsuario.telefono2" type="number" inputmode="numeric">
+            </ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label color="danger" position="floating">
+                Direcci&oacute;n
+            </ion-label>
+            <ion-input [(ngModel)]="newUsuario.direccion" type="text" inputmode="text">
+            </ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label color="danger" position="floating">
+                Localidad
+            </ion-label>
+            <ion-input [(ngModel)]="newUsuario.localidad" type="text" inputmode="text">
+            </ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label color="danger" position="floating">
+                Provincia
+            </ion-label>
+            <ion-input [(ngModel)]="newUsuario.provincia" type="text" inputmode="text">
+            </ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label color="danger" position="floating">
+                Pa&iacute;s:
+            </ion-label>
+            <ion-input [(ngModel)]="newUsuario.pais" type="text" inputmode="text">
+            </ion-input>
+        </ion-item>
+
+        <ion-item lines="full">
+            <ion-label color="danger">
+                Foto
+            </ion-label>
+            <ion-buttons slot="end">
+                <ion-button>
+                    <label for="file-upload">
+                        <ion-icon slot="icon-only" name="images-outline"></ion-icon>
+                    </label>
+                    <input (change)="newImageUpload($event)" id="file-upload" style="display: none" type="file" accept="image/*">
+                </ion-button>
+            </ion-buttons>
+        </ion-item>
+        <ion-avatar>
+            <img *ngIf="!newUsuario.image.length" src="../../../assets/images/persona1.png">
+            <img *ngIf="newUsuario.image.length" [src]="newUsuario.image">
+        </ion-avatar>
+
+        <div class="ion-text-center ion-margin-top ion-margin-bottom">
+            <ion-button style="margin-right: 3%;" color="danger" fill="outline" (click)="enableEditUsuario = false">
+                cancelar
+                <ion-icon color="danger" slot="start" name="close"></ion-icon>
+            </ion-button>
+    
+            <ion-button color="danger" (click)="guardarCambios()">
+                guardar
+                <ion-icon color="light" slot="start" name="save-outline"></ion-icon>
+            </ion-button>
+        </div>
+
+    </div>
+
+    <div *ngIf="!enableEditUsuario">
+        <ion-text color="danger">
+            <h3 class="subtitulo encabezado ion-text-center ion-margin">Lista de Usuarios</h3>
+        </ion-text>
+        
+        <ion-item *ngFor="let usuario of usuarios">
+            <ion-label class="normal"> {{usuario.nombre}} {{usuario.apellido}} </ion-label>
+            <ion-buttons slot="end">
+                <ion-button (click)=" newUsuario =  usuario; enableEditUsuario = true;">
+                    <ion-icon slot="icon-only" color="dark" name="create-outline"></ion-icon>
+                </ion-button>
+                <ion-button (click)="deleteUsuario(usuario)">
+                    <ion-icon slot="icon-only" color="danger" name="trash-outline"></ion-icon>
+                </ion-button>
+            </ion-buttons>
+        </ion-item>
+    </div>
+
+</ion-content>

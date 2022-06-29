@@ -1,0 +1,60 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title class="subtitulo ion-text-wrap ion-text-center">
+            Inicio
+        </ion-title>
+
+        <ion-buttons slot="start">
+            <ion-button (click)="openMenu()">
+                <ion-icon color="light" slot="icon-only" name="ellipsis-horizontal-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+
+        <ion-buttons slot="end">
+            <ion-button [routerLink]="['/perfil']">
+                <ion-icon color="light" slot="icon-only" name="person-circle-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-grid class="ion-padding">
+        <ion-row>
+            <ion-col>
+                <div>
+                    <img src="assets/images/mikolaszek-150.png" alt="logo Mikolaszek">
+                </div>
+            </ion-col>
+        </ion-row>
+
+        <ion-row>
+            <h1 style="margin-bottom: 0;">Bienvenido!</h1>
+        </ion-row>
+
+        <ion-row class="ion-text-center">
+            <p style="margin-bottom:0;">
+                Reg&iacute;strese y acceda a todas las funcionalidades que ofrece la app.
+            </p>
+
+            <p>
+                Si quiere saber m&aacute;s puede
+                <a class="link" [href]="urlDocumentacion" target="_blank">
+                    <ion-text color="danger">visitar la documentación de uso</ion-text>
+                </a>
+            </p>
+        </ion-row>
+
+        <div class="more">
+            <ion-button [routerLink]="['/perfil']" expand="full" class="normal" color="danger">
+                Comenzar
+            </ion-button>
+        </div>
+
+    </ion-grid>
+</ion-content>
+
+<ion-footer>
+    <small><p><a [href]="url" target="_blank">&copy; Procyon - v1.0</a></p></small>
+</ion-footer>

@@ -1,0 +1,27 @@
+.presupuesto-number{
+    font-size: .9rem;
+}
+.resumen{
+    display: flex;
+    justify-content: space-between;
+}
+ion-grid{
+    padding: 0;
+    border-top: 1px solid #92949c2e;
+    // border: 1px solid #eb445a;
+    // border-radius: 5px;
+}
+
+ion-col{
+    padding-left: 0;
+}
+
+.text-inicia-sesion{
+    color: #000;
+    font-size: 1.1rem;
+}
+
+.card{
+    margin-bottom: 8%;
+    border: 1px solid #d2d2d275;
+}

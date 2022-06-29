@@ -1,0 +1,86 @@
+<ion-header>
+
+    <ion-toolbar>
+        <ion-title class="subtitulo ion-text-wrap ion-text-center">
+            Venta
+        </ion-title>
+
+        <ion-buttons slot="start">
+            <ion-button (click)="openMenu()">
+                <ion-icon color="light" slot="icon-only" name="ellipsis-horizontal-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+
+        <ion-buttons slot="end">
+            <ion-button [routerLink]="['/venta']">
+                <ion-icon color="light" slot="icon-only" name="bag-handle-outline"></ion-icon>
+            </ion-button>
+            <ion-button [routerLink]="['/perfil']">
+                <ion-icon color="light" slot="icon-only" name="person-circle-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+
+    </ion-toolbar>
+
+</ion-header>
+
+<ion-content>
+
+    <div *ngIf="!uid.length">
+        <p>Debe estar logueado para ver esto</p>
+    </div>
+
+    <div *ngIf="uid.length">
+        <div style="border-bottom: 1px solid #dedede;">
+            <div class="ion-padding">
+                <ion-label>Cliente</ion-label>
+                <ion-card class="card-select">
+                    <ion-select (ionChange)="selectCliente($event)" placeholder="Elija Cliente" interface="popover">
+                        <ion-select-option color="danger" *ngFor="let cliente of clientes" [value]="cliente">{{cliente.nombre}} {{cliente.apellido}}</ion-select-option>
+                    </ion-select>
+                </ion-card>
+            </div>
+        </div>
+
+        <div style="border-bottom: 1px solid #dedede;" class="ion-padding">
+            <ion-label>Productos</ion-label>
+            <div *ngFor="let producto of venta.productos">
+                <app-itemcarrito [productoVendido]="producto"></app-itemcarrito>
+            </div>
+        </div>
+    </div>
+
+</ion-content>
+
+<ion-footer>
+
+    <div *ngIf="!uid.length"></div>
+
+    <div *ngIf="uid.length">
+        <div class="resumen__container">
+            <ion-label class="ion-padding">Res&uacute;men</ion-label>
+            <div class="resumen__detalle ion-padding-start ion-padding-end">
+                <div class="resumen__item">
+                    <ion-label color="medium">
+                        Cantidad de productos
+                    </ion-label>
+                    <ion-label>
+                        <strong>{{cantidad}}</strong>
+                    </ion-label>
+                </div>
+                <div class="resumen__item">
+                    <ion-label color="medium">
+                        Total
+                    </ion-label>
+                    <ion-label>
+                        <strong>${{total}}</strong>
+                    </ion-label>
+                </div>
+            </div>
+            <ion-button (click)="vender()" expand="full" class="normal" color="danger" class="ion-padding-start ion-padding-end">
+                Vender
+            </ion-button>
+        </div>
+    </div>
+
+</ion-footer>

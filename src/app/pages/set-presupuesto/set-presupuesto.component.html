@@ -1,0 +1,35 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title class="subtitulo ion-text-wrap ion-text-center">
+            Servicios
+        </ion-title>
+
+        <ion-buttons slot="start">
+            <ion-button (click)="openMenu()">
+                <ion-icon color="light" slot="icon-only" name="ellipsis-horizontal-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+
+        <ion-buttons slot="end">
+            <ion-button [routerLink]="['/presupuesto']">
+                <ion-icon slot="icon-only" name="reader-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+
+        <ion-buttons slot="end">
+            <ion-button [routerLink]="['/perfil']">
+                <ion-icon color="light" slot="icon-only" name="person-circle-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>        
+
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+    <div *ngFor="let servicio of servicios">
+        <app-servicio [servicio]=servicio></app-servicio>
+    </div>
+
+
+</ion-content>

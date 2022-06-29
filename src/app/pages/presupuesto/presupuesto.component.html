@@ -1,0 +1,202 @@
+<ion-header>
+    <ion-toolbar>
+
+        <ion-title class="subtitulo ion-text-wrap ion-text-center">
+            Presupuesto
+        </ion-title>
+
+        <ion-buttons slot="start">
+            <ion-button (click)="openMenu()">
+                <ion-icon color="light" slot="icon-only" name="ellipsis-horizontal-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+
+        <ion-buttons slot="end">
+            <ion-button [routerLink]="['/set-presupuesto']">
+                <ion-icon color="light" slot="start" name="construct-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+
+        <ion-buttons slot="end">
+            <ion-button [routerLink]="['/perfil']">
+                <ion-icon color="light" slot="icon-only" name="person-circle-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+    <div *ngIf="!uid.length">
+        <p>Debe estar logueado para ver esto</p>
+    </div>
+
+    <div *ngIf="uid.length">
+        <div style="border-bottom: 1px solid #dedede;">
+            <div class="ion-padding">
+                <ion-label>Cliente</ion-label>
+                <ion-card class="card-select">
+                    <ion-select (ionChange)="selectCliente($event)" placeholder="Elija Cliente" interface="popover">
+                        <ion-select-option *ngFor="let cliente of clientes" [value]="cliente">{{cliente.nombre}} {{cliente.apellido}}</ion-select-option>
+                    </ion-select>
+                </ion-card>
+            </div>
+        </div>
+
+        <div style="border-bottom: 1px solid #dedede;">
+            <div class="ion-padding">
+                <ion-label>Ficha t&eacute;cnica</ion-label>
+                <ion-card class="card-select">
+                    <ion-select (ionChange)="selectFicha($event)" placeholder="Elija Ficha" interface="popover">
+                        <ion-select-option *ngFor="let ficha of fichas" [value]="ficha">{{ficha.nombre}} {{ficha.descripcion}}</ion-select-option>
+                    </ion-select>
+                </ion-card>
+            </div>
+        </div>
+
+        <div style="border-bottom: 1px solid #dedede;" class="ion-padding">
+            <ion-label>Servicios</ion-label>
+            <div *ngFor="let detalle of detalleServicio.servicios">
+                <app-itempresupuesto [servicioSolicitado]="detalle"></app-itempresupuesto>
+            </div>
+        </div>
+
+        <ion-item>
+            <ion-label style="color: #000000" position="floating">
+                Observaciones
+            </ion-label>
+            <ion-textarea [(ngModel)]="presupuesto.observacion" type="text" inputmode="text">
+            </ion-textarea>
+        </ion-item>
+
+        <div class="ion-padding">
+            <ion-label>
+                Descuento
+            </ion-label>
+
+            <ion-card class="ion-margin-top ion-margin-bottom descuento card-select">
+                <ion-card-content>
+                    <div class="ion-margin-bottom">
+                        <ion-item class="ion-margin-bottom">
+                            <ion-label color="danger" position="floating"> Monto a descontar </ion-label>
+                            <ion-input color="danger" [(ngModel)]="descuento" type="number" inputmode="numeric" placeholder="200">
+                            </ion-input>
+                        </ion-item>
+
+                        <ion-buttons class="ion-margin-top">
+                            <ion-button color="danger" fill="solid" (click)="getDescuento()" style="width: 100%;">
+                                <ion-icon slot="start" name="calculator-outline"></ion-icon>
+                                Calcular descuento
+                            </ion-button>
+                        </ion-buttons>
+
+                        <ion-buttons class="ion-margin-top">
+                            <ion-button color="danger" fill="outline" (click)="deleteDescuento()" style="width: 100%;">
+                                <ion-icon slot="start" name="trash-outline"></ion-icon>
+                                Borrar descuento
+                            </ion-button>
+                        </ion-buttons>
+                    </div>
+
+                    <ion-label>
+                        Total con descuento ${{precioDescuento}}
+                    </ion-label>
+                </ion-card-content>
+            </ion-card>
+
+            <div>
+                <ion-text style="font-size: .8rem;" color="medium">
+                    Para calcular un descuento ingrese un monto en el campo
+                    <ion-text color="danger">Monto a descontar</ion-text>
+                    y presione <strong>Calcular descuento</strong>.
+                </ion-text>
+            </div>
+
+            <div style="margin-top: 2%;">
+                <ion-text style="font-size: .8rem;" color="medium">
+                    Si quiere <strong>aplicar</strong> el descuento presione <strong>PRESUPUESTAR</strong>.
+                </ion-text>
+            </div>
+
+            <div style="margin-top: 2%;">
+                <ion-text style="font-size: .8rem;" color="medium">
+                    Si quiere <strong>cancelar</strong> el descuento presione <strong>Borrar descuento</strong> y luego <strong>PRESUPUESTAR</strong>.
+                </ion-text>
+            </div>
+
+        </div>
+    </div>
+</ion-content>
+
+<div *ngIf="!uid.length"></div>
+
+<div *ngIf="uid.length">
+    <ion-footer>
+        <div class="resumen__container">
+            <ion-label class="ion-padding">Res&uacute;men</ion-label>
+            <div class="resumen__detalle ion-padding-start ion-padding-end">
+                <div class="resumen__item">
+                    <ion-label color="medium">
+                        Cantidad de servicios
+                    </ion-label>
+                    <ion-label>
+                        <strong>{{cantidad}}</strong>
+                    </ion-label>
+                </div>
+                <div class="resumen__item">
+                    <ion-label color="medium">
+                        Total
+                    </ion-label>
+                    <ion-label>
+                        <strong>${{precioFinal}}</strong>
+                    </ion-label>
+                </div>
+                <div class="resumen__item">
+                    <ion-label color="medium">
+                        Total con descuento
+                    </ion-label>
+                    <ion-label>
+                        <strong>${{precioDescuento}}</strong>
+                    </ion-label>
+                </div>
+            </div>
+            <ion-button (click)="presupuestar()" expand="full" class="normal" color="danger" class="ion-padding-start ion-padding-end">
+                Presupuestar
+            </ion-button>
+        </div>
+
+        <!-- <div class="ion-padding">
+            <ion-label class="ion-padding">Res&uacute;men</ion-label>
+            <div class="ion-padding">
+                <div class="resumen">
+                    <ion-label color="medium">
+                        Cantidad de servicios
+                    </ion-label>
+                    <ion-label>
+                        <strong>{{cantidad}}</strong>
+                    </ion-label>
+                </div>
+                <div class="resumen">
+                    <ion-label color="medium">
+                        Total
+                    </ion-label>
+                    <ion-label>
+                        <strong>${{precioFinal}}</strong>
+                    </ion-label>
+                </div>
+                <div class="resumen">
+                    <ion-label color="medium">
+                        Total con descuento
+                    </ion-label>
+                    <ion-label>
+                        <strong>${{precioDescuento}}</strong>
+                    </ion-label>
+                </div>
+            </div>
+            <ion-button (click)="presupuestar()" expand="full" class="normal" color="danger">
+                Presupuestar
+            </ion-button>
+        </div> -->
+    </ion-footer>
+</div>

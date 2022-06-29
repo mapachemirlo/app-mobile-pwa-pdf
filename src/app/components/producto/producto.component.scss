@@ -1,0 +1,21 @@
+ion-card-content{
+    display: flex;    
+    padding-bottom: 0;
+    .imagen{
+        width: 40%;
+        ion-img{
+            height: 100px;
+        }
+    }
+    .producto{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        width: 60%;
+        margin-left: 5%;
+    }
+}
+ion-card-header{
+    padding-top: 0;
+}

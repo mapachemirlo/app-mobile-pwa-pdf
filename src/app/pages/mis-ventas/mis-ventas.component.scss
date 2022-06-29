@@ -1,0 +1,26 @@
+ion-card-header{
+    width: 100%;
+    font-size: .9rem;
+    .text-inicia-sesion{
+        color: #000;
+        font-size: 1.1rem;
+    }
+}
+
+
+.card{
+    margin-bottom: 8%;
+    border: 1px solid #d2d2d275;
+    .resumen{
+        display: flex;
+        justify-content: space-between;
+    }
+    .resumen__total{
+        border-top: 1px solid #dedede;
+        padding-bottom: 0;
+    }
+}
+
+ion-label{
+    font-size: .9rem;
+}

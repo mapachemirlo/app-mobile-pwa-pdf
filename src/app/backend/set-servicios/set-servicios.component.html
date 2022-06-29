@@ -1,0 +1,110 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title  class="subtitulo ion-text-wrap ion-text-center">
+            Servicios
+        </ion-title>
+        <ion-buttons slot="start">
+            <ion-button (click)="openMenu()">
+                <ion-icon color="light" slot="icon-only" name="ellipsis-horizontal-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <ion-buttons slot="end">
+            <ion-button (click)="nuevo()">
+                <ion-icon color="light" slot="icon-only" name="add-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <div *ngIf="enableNewServicio">
+
+        <ion-buttons class="back" slot="start">
+            <ion-button (click)="enableNewServicio = false">
+                <ion-icon name="arrow-back-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+
+        <h3 class="subtitulo encabezado ion-text-center ion-margin">Datos del servicio</h3>
+
+        <ion-item>
+            <ion-label color="danger" position="floating">
+                Nombre
+            </ion-label>
+            <ion-input [(ngModel)]="newServicio.nombre" type="text" inputmode="text" placeholder="Cadena">
+            </ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label color="danger" position="floating">
+                Tipo
+            </ion-label>
+            <ion-input [(ngModel)]="newServicio.tipo" type="text" inputmode="text" placeholder="Lado solo">
+            </ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label color="danger" position="floating">
+                Unidad de medida
+            </ion-label>
+            <ion-input [(ngModel)]="newServicio.unidadMedida" type="text" inputmode="text" placeholder="mL">
+            </ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label color="danger" position="floating">
+                Precio
+            </ion-label>
+            <ion-input [(ngModel)]="newServicio.precio" type="number" inputmode="numeric" placeholder="1600">
+            </ion-input>
+        </ion-item>
+
+        <div class="ion-text-center ion-margin-top ion-margin-bottom">
+            <ion-button style="margin-right: 3%;" color="danger" fill="outline" (click)="enableNewServicio = false">
+                cancelar
+                <ion-icon color="danger" slot="start" name="close"></ion-icon>
+            </ion-button>
+    
+            <ion-button color="danger" (click)="guardarServicio()" >
+                guardar
+                <ion-icon color="light" slot="start" name="save-outline"></ion-icon>
+            </ion-button>
+        </div>
+    </div>
+
+    <div *ngIf="!enableNewServicio">
+        <ion-text color="danger">
+            <h3 class="subtitulo encabezado ion-text-center ion-margin">Lista de Servicios</h3>
+        </ion-text>
+
+        <ion-item *ngFor="let servicio of servicios">
+            <ion-grid>
+                <ion-row>
+
+                    <ion-col size="5">
+                        <ion-label><strong>{{servicio.nombre}}</strong></ion-label>
+                        <ion-label>{{servicio.tipo}}</ion-label>
+                    </ion-col>
+
+                    <ion-col size="3">
+                        <ion-label color="danger"><strong>${{servicio.precio}}</strong></ion-label>
+                    </ion-col>
+
+                    <ion-col size="4">
+                        <ion-buttons>
+                            <ion-button (click)="newServicio =  servicio; enableNewServicio = true;">
+                                <ion-icon slot="icon-only" color="dark" name="create-outline"></ion-icon>
+                            </ion-button>
+                            <ion-button (click)="deleteServicio(servicio)">
+                                <ion-icon slot="icon-only" color="danger" name="trash-outline"></ion-icon>
+                            </ion-button>
+                        </ion-buttons>
+                    </ion-col>
+                    
+                </ion-row>                
+            </ion-grid>        
+        </ion-item>
+    </div>
+
+
+</ion-content>

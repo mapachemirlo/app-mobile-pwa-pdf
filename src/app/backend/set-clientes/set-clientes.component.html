@@ -1,0 +1,161 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title class="subtitulo ion-text-wrap ion-text-center">
+            Clientes
+        </ion-title>
+
+        <ion-buttons slot="start">
+            <ion-button (click)="openMenu()">
+                <ion-icon color="light" slot="icon-only" name="ellipsis-horizontal-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <ion-buttons slot="end">
+            <ion-button (click)="nuevo()">
+                <ion-icon color="light" slot="icon-only" name="add-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+    <div *ngIf="!uid.length">
+        <p>Tenes que loguearte para usar esto</p>
+    </div>
+
+    <div *ngIf="uid.length">
+        <div *ngIf="enableNewCliente">
+
+            <ion-buttons class="back" slot="start">
+                <ion-button (click)="enableNewCliente = false">
+                    <ion-icon name="arrow-back-outline"></ion-icon>
+                </ion-button>
+            </ion-buttons>
+
+            <h3 class="subtitulo encabezado ion-text-center ion-margin">Datos del cliente</h3>
+
+            <ion-item>
+                <ion-label color="danger" position="floating">
+                    Apellido
+                </ion-label>
+                <ion-input [(ngModel)]="newCliente.apellido" type="text" inputmode="text" placeholder="Ramirez">
+                </ion-input>
+            </ion-item>
+
+            <ion-item>
+                <ion-label color="danger" position="floating">
+                    Nombre
+                </ion-label>
+                <ion-input [(ngModel)]="newCliente.nombre" type="text" inputmode="text" placeholder="Ricardo">
+                </ion-input>
+            </ion-item>
+
+            <ion-item>
+                <ion-label color="danger" position="floating">
+                    Email
+                </ion-label>
+                <ion-input [(ngModel)]="newCliente.email" type="email" inputmode="email" placeholder="ricardo@gmail.com">
+                </ion-input>
+            </ion-item>
+
+            <ion-item>
+                <ion-label color="danger" position="floating">
+                    Tel&eacute;fono 1
+                </ion-label>
+                <ion-input [(ngModel)]="newCliente.telefono1" type="number" inputmode="numeric" placeholder="1122334455">
+                </ion-input>
+            </ion-item>
+
+            <ion-item>
+                <ion-label color="danger" position="floating">
+                    Tel&eacute;fono 2
+                </ion-label>
+                <ion-input [(ngModel)]="newCliente.telefono2" type="number" inputmode="numeric" placeholder="02204804444">
+                </ion-input>
+            </ion-item>
+
+            <ion-item>
+                <ion-label color="danger" position="floating">
+                    Empresa
+                </ion-label>
+                <ion-input [(ngModel)]="newCliente.empresa" type="text" inputmode="text" placeholder="Coto">
+                </ion-input>
+            </ion-item>
+
+            <ion-item>
+                <ion-label color="danger" position="floating">
+                    Direcci&oacute;n
+                </ion-label>
+                <ion-input [(ngModel)]="newCliente.direccion" type="text" inputmode="text" placeholder="Jun&iacute;n 123 piso 5c">
+                </ion-input>
+            </ion-item>
+
+            <ion-item>
+                <ion-label color="danger" position="floating">
+                    Localidad
+                </ion-label>
+                <ion-input [(ngModel)]="newCliente.localidad" type="text" inputmode="text" placeholder="Hurlingham">
+                </ion-input>
+            </ion-item>
+
+            <ion-item>
+                <ion-label color="danger" position="floating">
+                    Provincia
+                </ion-label>
+                <ion-input [(ngModel)]="newCliente.provincia" type="text" inputmode="text" placeholder="Buenos Aires">
+                </ion-input>
+            </ion-item>
+
+            <ion-item>
+                <ion-label color="danger" position="floating">
+                    Pa&iacute;s
+                </ion-label>
+                <ion-input [(ngModel)]="newCliente.pais" type="text" inputmode="text" placeholder="Argentina">
+                </ion-input>
+            </ion-item>
+
+            <ion-item>
+                <ion-label color="danger" position="floating">
+                    Notas
+                </ion-label>
+                <ion-textarea [(ngModel)]="newCliente.notas" type="text" inputmode="text" placeholder="Horarios libres de 16 a 18hs">
+                </ion-textarea>
+            </ion-item>
+
+            <div class="ion-text-center ion-margin-top ion-margin-bottom">
+                <ion-button style="margin-right: 3%;" color="danger" fill="outline" (click)="enableNewCliente = false">
+                    cancelar
+                    <ion-icon color="danger" slot="start" name="close"></ion-icon>
+                </ion-button>
+
+                <ion-button color="danger" (click)="guardarCliente()">
+                    guardar
+                    <ion-icon color="light" slot="start" name="save-outline"></ion-icon>
+                </ion-button>
+            </div>
+
+        </div>
+
+        <div *ngIf="!enableNewCliente">
+            <ion-text color="danger">
+                <h3 class="subtitulo encabezado ion-text-center ion-margin">Lista de clientes</h3>
+            </ion-text>
+
+            <ion-item *ngFor="let cliente of clientes">
+                <ion-label class="normal"> {{cliente.nombre}} {{cliente.apellido}} </ion-label>
+                <ion-buttons slot="end">
+                    <ion-button (click)=" newCliente =  cliente; enableNewCliente = true; ">
+                        <ion-icon slot="icon-only" color="dark" name="create-outline"></ion-icon>
+                    </ion-button>
+                    <ion-button (click)="deleteCliente(cliente)">
+                        <ion-icon slot="icon-only" color="danger" name="trash-outline"></ion-icon>
+                    </ion-button>
+                </ion-buttons>
+            </ion-item>
+        </div>
+
+    </div>
+
+
+
+</ion-content>

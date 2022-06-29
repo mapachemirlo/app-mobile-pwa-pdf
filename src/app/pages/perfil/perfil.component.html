@@ -1,0 +1,311 @@
+<!--------------INICIO TOOLBAR------------------->
+<ion-header>
+    <ion-toolbar>
+        <ion-title class="encabezado ion-text-wrap ion-text-center">
+            Perfil
+        </ion-title>
+
+        <ion-buttons slot="start">
+            <ion-button (click)="openMenu()">
+                <ion-icon color="light" slot="icon-only" name="ellipsis-horizontal-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <ion-buttons slot="end">
+            <ion-button>
+                <ion-icon color="light" slot="icon-only" name="person-circle-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+<!--------------FIN TOOLBAR------------------->
+
+
+
+
+
+<ion-content>
+    <!--------------INICIO DE INICIAR SESION Y CREAR CUENTA, USUARIO NO LOGUEADO------------------->
+    <div *ngIf="!uid.length" class="ion-margin-top ion-margin-bottom">
+
+        <!--------------INICIO DE BOTON INGRESAR (redirige a pagina para ingresar email y pass)------------------->
+        <ion-card *ngIf="!ingresarEnable" class="ion-text-center ion-margin">
+            <ion-card-header>
+                <ion-text color="dark">
+                    <h3 class="encabezado">Iniciar sesi&oacute;n</h3>
+                </ion-text>
+            </ion-card-header>
+
+            <ion-card-content>
+                <ion-button *ngIf="!ingresarEnable" (click)="ingresarEnable = true" expand="full" fill="solid" color="danger" class="ion-margin-bottom">
+                    Ingresar
+                </ion-button>
+            </ion-card-content>
+        </ion-card>
+        <!--------------FIN DE BOTON INGRESAR (redirige a pagina para ingresar email y pass)------------------->
+
+
+        <!--------------INICIO CREAR CUENTA------------------->
+        <ion-card class="ion-text-center ion-margin">
+            <ion-card-header *ngIf="!ingresarEnable">
+                <ion-text color="dark">
+                    <h3 class="encabezado">Crear cuenta</h3>
+                </ion-text>
+            </ion-card-header>
+
+            <ion-card-header *ngIf="ingresarEnable">
+                <ion-text color="dark">
+                    <h3 class="encabezado ion-text-center">Iniciar sesi&oacute;n</h3>
+                </ion-text>
+            </ion-card-header>
+
+            <ion-card-content>
+                <ion-item lines="full">
+                    <ion-label color="danger" position="floating">
+                        Email
+                    </ion-label>
+                    <ion-input name="email" [(ngModel)]="usuario.email" type="email" inputmode="text" placeholder="ejemplo@gmail.com">
+                    </ion-input>
+                </ion-item>
+
+                <ion-item>
+                    <ion-label color="danger" position="floating">
+                        Contraseña
+                    </ion-label>
+                    <ion-input [(ngModel)]="usuario.password" type="password" inputmode="text">
+                    </ion-input>
+                </ion-item>
+
+                <div class="ion-padding ion-text-right" *ngIf="ingresarEnable" button=true [routerLink]="['/reset-pass']">
+                    Olvid&eacute; mi contraseña
+                </div>
+
+                <div *ngIf="ingresarEnable" class="ion-margin-top">
+                    <ion-button class="ion-margin-bottom" *ngIf="ingresarEnable" (click)="ingresar()" expand="full" fill="solid" color="danger">
+                        Ingresar
+                    </ion-button>
+
+
+
+                    <ion-button *ngIf="ingresarEnable" (click)="ingresarEnable = false" expand="full" fill="solid" color="danger">
+                        Volver atr&aacute;s
+                    </ion-button>
+                </div>
+
+
+                <ion-item *ngIf="!ingresarEnable">
+                    <ion-label color="danger" position="floating">
+                        Apellido
+                    </ion-label>
+                    <ion-input [(ngModel)]="usuario.apellido" type="text" inputmode="text" placeholder="L&oacute;pez">
+                    </ion-input>
+                </ion-item>
+
+                <ion-item *ngIf="!ingresarEnable">
+                    <ion-label color="danger" position="floating">
+                        Nombre
+                    </ion-label>
+                    <ion-input [(ngModel)]="usuario.nombre" type="text" inputmode="text" placeholder="Paula">
+                    </ion-input>
+                </ion-item>
+
+                <ion-item *ngIf="!ingresarEnable">
+                    <ion-label color="danger" position="floating">
+                        Tel&eacute;fono 1
+                    </ion-label>
+                    <ion-input [(ngModel)]="usuario.telefono1" type="number" inputmode="numeric" placeholder="1122334455">
+                    </ion-input>
+                </ion-item>
+
+                <ion-item *ngIf="!ingresarEnable">
+                    <ion-label color="danger" position="floating">
+                        Tel&eacute;fono 2
+                    </ion-label>
+                    <ion-input [(ngModel)]="usuario.telefono2" type="number" inputmode="numeric" placeholder="02204850044">
+                    </ion-input>
+                </ion-item>
+
+                <ion-item *ngIf="!ingresarEnable">
+                    <ion-label color="danger" position="floating">
+                        Direcci&oacute;n
+                    </ion-label>
+                    <ion-input [(ngModel)]="usuario.direccion" type="text" inputmode="text" placeholder="Avenida Rivadavia 22000 piso 5C">
+                    </ion-input>
+                </ion-item>
+
+                <ion-item *ngIf="!ingresarEnable">
+                    <ion-label color="danger" position="floating">
+                        Localidad
+                    </ion-label>
+                    <ion-input [(ngModel)]="usuario.localidad" type="text" inputmode="text" placeholder="Villa Ballester">
+                    </ion-input>
+                </ion-item>
+
+                <ion-item *ngIf="!ingresarEnable">
+                    <ion-label color="danger" position="floating">
+                        Provincia
+                    </ion-label>
+                    <ion-input [(ngModel)]="usuario.provincia" type="text" inputmode="text" placeholder="Buenos Aires">
+                    </ion-input>
+                </ion-item>
+
+                <ion-item *ngIf="!ingresarEnable">
+                    <ion-label color="danger" position="floating">
+                        Pa&iacute;s
+                    </ion-label>
+                    <ion-input [(ngModel)]="usuario.pais" type="text" inputmode="text" placeholder="Argentina">
+                    </ion-input>
+                </ion-item>
+
+                <ion-item lines="full" *ngIf="!ingresarEnable">
+                    <ion-label color="danger">
+                        Foto
+                    </ion-label>
+                    <ion-buttons slot="end">
+                        <ion-button>
+                            <label for="file-upload">
+                                <ion-icon slot="icon-only" name="images-outline"></ion-icon>
+                            </label>
+                            <input (change)="newImageUpload($event)" id="file-upload" style="display: none" type="file" accept="image/*">
+                        </ion-button>
+                    </ion-buttons>
+                </ion-item>
+                <ion-avatar *ngIf="!ingresarEnable">
+                    <img *ngIf="!usuario.image.length" src="../../../assets/images/persona1.png">
+                    <img *ngIf="usuario.image.length" [src]="usuario.image">
+                </ion-avatar>
+
+                <div class="ion-text-center">
+                    <ion-button *ngIf="!ingresarEnable" (click)="registrarse()" expand="full" fill="solid" color="danger" class="ion-margin-top">
+                        Registrarme
+                    </ion-button>
+                </div>
+            </ion-card-content>
+        </ion-card>
+        <!--------------FIN CREAR CUENTA------------------->
+    </div>
+    <!--------------FIN DE INICIAR SESION Y CREAR CUENTA, USUARIO NO LOGUEADO------------------->
+
+
+
+    <!--------------INICIO DE PERFIL, USUARIO LOGUEADO------------------->
+    <div *ngIf="uid.length">
+        <ion-card class="ion-text-center ion-margin">
+            <ion-card-header style="border-bottom: 1px solid #d7d8da;">
+                <ion-avatar lines="none">
+                    <img *ngIf="!usuario.image.length" src="../../../assets/images/persona1.png">
+                    <img *ngIf="usuario.image.length" [src]="usuario.image">
+                </ion-avatar>
+                <ion-text color="dark">
+                    <p class="encabezado ion-text-center">
+                        {{usuario.nombre}} {{usuario.apellido}}
+                    </p>
+                </ion-text>
+
+            </ion-card-header>
+
+            <ion-card-content>
+                <ion-item lines="full">
+                    <ion-label color="danger">
+                        Email<br>
+                        <ion-text color="dark">{{usuario.email}}</ion-text>
+                    </ion-label>
+
+                </ion-item>
+
+                <ion-item>
+                    <ion-label color="danger" position="floating">
+                        Apellido
+                    </ion-label>
+                    <ion-input [(ngModel)]="usuario.apellido" type="text" inputmode="text">
+                    </ion-input>
+                </ion-item>
+
+                <ion-item>
+                    <ion-label color="danger" position="floating">
+                        Nombre
+                    </ion-label>
+                    <ion-input [(ngModel)]="usuario.nombre" type="text" inputmode="text">
+                    </ion-input>
+                </ion-item>
+
+                <ion-item>
+                    <ion-label color="danger" position="floating">
+                        Tel&eacute;fono 1
+                    </ion-label>
+                    <ion-input [(ngModel)]="usuario.telefono1" type="text" inputmode="text">
+                    </ion-input>
+                </ion-item>
+
+                <ion-item>
+                    <ion-label color="danger" position="floating">
+                        Tel&eacute;fono 2
+                    </ion-label>
+                    <ion-input [(ngModel)]="usuario.telefono2" type="text" inputmode="text">
+                    </ion-input>
+                </ion-item>
+
+                <ion-item>
+                    <ion-label color="danger" position="floating">
+                        Direcci&oacute;n
+                    </ion-label>
+                    <ion-input [(ngModel)]="usuario.direccion" type="text" inputmode="text">
+                    </ion-input>
+                </ion-item>
+
+                <ion-item>
+                    <ion-label color="danger" position="floating">
+                        Localidad
+                    </ion-label>
+                    <ion-input [(ngModel)]="usuario.localidad" type="text" inputmode="text">
+                    </ion-input>
+                </ion-item>
+
+                <ion-item>
+                    <ion-label color="danger" position="floating">
+                        Provincia
+                    </ion-label>
+                    <ion-input [(ngModel)]="usuario.provincia" type="text" inputmode="text">
+                    </ion-input>
+                </ion-item>
+
+                <ion-item>
+                    <ion-label color="danger" position="floating">
+                        Pa&iacute;s
+                    </ion-label>
+                    <ion-input [(ngModel)]="usuario.pais" type="text" inputmode="text">
+                    </ion-input>
+                </ion-item>
+
+                <ion-item lines="full">
+                    <ion-label color="danger">
+                        Foto
+                    </ion-label>
+                    <ion-buttons slot="end">
+                        <ion-button>
+                            <label for="file-upload">
+                                <ion-icon slot="icon-only" name="images-outline"></ion-icon>
+                            </label>
+                            <input (change)="newImageUpload($event)" id="file-upload" style="display: none" type="file" accept="image/*">
+                        </ion-button>
+                    </ion-buttons>
+                </ion-item>
+
+                <ion-avatar class="text-center">
+                    <img *ngIf="!usuario.image.length" src="../../../assets/images/persona1.png">
+                    <img *ngIf="usuario.image.length" [src]="usuario.image">
+                </ion-avatar>
+
+                <div class="ion-text-center">
+                    <ion-button class="ion-margin-top ion-margin-bottom" (click)="guardarUsuario()" expand="full" fill="solid" color="danger">
+                        guardar cambios
+                    </ion-button>
+                    <ion-button (click)="salir()" expand="full" fill="solid" color="danger">
+                        salir
+                    </ion-button>
+                </div>
+            </ion-card-content>
+        </ion-card>
+    </div>
+    <!--------------FIN DE PERFIL, USUARIO LOGUEADO------------------->
+
+</ion-content>

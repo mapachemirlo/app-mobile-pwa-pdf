@@ -1,0 +1,17 @@
+.medidas{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border: 1px solid #eb445a54;
+    padding-top: 4%;
+    border-radius: 5px;
+    margin-bottom: 3%;
+    ion-item{
+        width: 70%;
+    }
+}
+
+ion-text, ion-label, ion-card-subtitle{
+    cursor: default;
+}

@@ -1,0 +1,68 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title class="encabezado ion-text-wrap ion-text-center">
+            Mis Ventas
+        </ion-title>
+
+        <ion-buttons slot="start">
+            <ion-button (click)="openMenu()">
+                <ion-icon color="light" slot="icon-only" name="ellipsis-horizontal-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+
+        <ion-buttons slot="end">
+            <ion-button [routerLink]="['/perfil']">
+                <ion-icon slot="icon-only" name="person-circle-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-card *ngIf="!uid.length" class="ion-text-center ion-padding">
+        <ion-card-header>
+            <p class="ion-text-wrap text-inicia-sesion">Inicia sesi&oacute;n para ver esta secci&oacute;n</p>
+        </ion-card-header>
+        <ion-card-content class="ion-no-padding">
+            <ion-button expand="full" fill="solid" color="danger" [routerLink]="['/perfil']">
+                Acceder
+            </ion-button>
+        </ion-card-content>
+    </ion-card>
+
+    <ion-card *ngFor="let venta of ventas" class="card ion-margin-top">
+        <ion-item lines="full">
+            <ion-card-header class="ion-text-center">
+                <div class="resumen">
+                    <ion-label color="medium">
+                        Fecha
+                    </ion-label>
+                    <ion-label color="medium">
+                        <strong>{{venta.fecha.seconds * 1000 | date}}</strong>
+                    </ion-label>                    
+                </div>
+            </ion-card-header>
+        </ion-item>
+
+        <ion-card-content>
+            <div>
+                <ion-label class="ion-padding" color="medium">
+                    Productos vendidos
+                </ion-label>
+                <app-itemcarrito *ngFor="let producto of venta.productos" [productoVendido]="producto" [botones]=false></app-itemcarrito>
+            </div>
+
+            <div class="resumen resumen__total ion-margin-top ion-padding">
+                <ion-label color="dark">
+                    Total
+                </ion-label>
+                <ion-label color="dark">
+                    <strong> ${{venta.precioTotal}}</strong>
+                </ion-label>
+            </div>
+        </ion-card-content>
+
+       
+    </ion-card>
+</ion-content>

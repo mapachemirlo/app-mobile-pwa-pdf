@@ -1,0 +1,38 @@
+<ion-header>
+
+    <ion-toolbar>
+        <ion-title class="subtitulo ion-text-wrap ion-text-center">
+            Productos
+        </ion-title>
+        <ion-buttons slot="start">
+            <ion-button (click)="openMenu()">
+                <ion-icon color="light" slot="icon-only" name="ellipsis-horizontal-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <ion-buttons slot="end">
+            <ion-button [routerLink]="['/carrito']">
+                <ion-icon slot="icon-only" name="card-outline"></ion-icon>
+            </ion-button>
+            <ion-button [routerLink]="['/perfil']">
+                <ion-icon slot="icon-only" name="person-circle-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+
+    </ion-toolbar>
+
+</ion-header>
+
+<ion-content>
+
+    <div *ngIf="!uid.length">
+        <p>Debe estar logueado para ver esto</p>
+    </div>
+
+    <div *ngIf="uid.length">
+        <div *ngFor="let producto of productos">
+            <app-producto [producto]="producto"></app-producto>
+        </div>
+    </div>
+
+
+</ion-content>

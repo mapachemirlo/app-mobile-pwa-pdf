@@ -1,0 +1,21 @@
+<ion-card>
+    <ion-card-content>
+        <div class="imagen">
+            <ion-img class="img-producto" [src]="producto.image"></ion-img>
+        </div>        
+        <div class="producto">       
+            <ion-label color="dark"><strong>{{producto.nombre}}</strong></ion-label>
+            <ion-text color="danger">${{producto.precio}}</ion-text>           
+        </div>
+    </ion-card-content>
+    
+    <div *ngIf="uid.length">
+        <ion-button
+        expand="full"
+        class="ion-margin"
+        color="danger"(click)="addCarrito()">
+            <ion-icon slot="start" name="add-circle-outline"></ion-icon>
+            Agregar a venta
+        </ion-button>
+    </div>
+</ion-card>

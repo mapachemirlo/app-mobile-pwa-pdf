@@ -1,0 +1,84 @@
+<ion-header>
+
+    <ion-toolbar>
+
+        <ion-title class="subtitulo ion-text-wrap ion-text-center">
+            Ventas
+        </ion-title>
+
+        <ion-buttons slot="start">
+            <ion-button (click)="openMenu()">
+                <ion-icon slot="icon-only" name="ellipsis-horizontal-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+
+        <ion-buttons slot="end">            
+            <ion-button [routerLink]="['/perfil']">
+                <ion-icon slot="icon-only" name="person-circle-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+
+    </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content>
+
+    <ion-card *ngIf="!uid.length" class="ion-text-center ion-padding">
+        <ion-card-header>
+            <p class="ion-text-wrap text-inicia-sesion">Inicia sesión como administrador para ver esta secci&oacute;n</p>
+        </ion-card-header>
+        <ion-card-content class="ion-no-padding">
+            <ion-button            
+            expand="full" 
+            fill="solid"
+            color="danger"
+            [routerLink]="['/perfil']">            
+                Acceder
+            </ion-button>
+        </ion-card-content>              
+    </ion-card>
+
+    <div *ngIf="uid.length">
+        <ion-card *ngFor="let venta of ventas" class="ion-margin-bottom ion-margin-top">         
+            <ion-card-content>
+                <div class="ion-padding">
+                    <div class="resumen">
+                        <ion-label color="medium">
+                            Fecha
+                        </ion-label>
+                        <ion-label>
+                            <strong>{{venta.fecha.seconds * 1000 | date }}</strong>
+                        </ion-label>
+                    </div>
+                    <div class="resumen">
+                        <ion-label color="medium">
+                            Vendedor
+                        </ion-label>
+                        <ion-label>
+                            <strong>{{venta.usuario.nombre}} {{venta.usuario.apellido}}</strong>
+                        </ion-label>
+                    </div>                                      
+                </div>
+
+                <div class="ion-padding-top" style="border-top: 1px solid #dedede">
+                    <ion-label class="ion-padding" color="medium">
+                        Productos vendidos
+                    </ion-label>
+                    <app-itemcarrito *ngFor="let producto of venta.productos" [productoVendido]="producto" [botones]=false></app-itemcarrito>
+                </div>
+
+                <div class="resumen ion-margin-top ion-padding" style="border-top: 1px solid #dedede">
+                    <ion-label color="dark">
+                        <strong>Total</strong>
+                    </ion-label>
+                    <ion-label color="dark">
+                        <strong>${{venta.precioTotal}}</strong>
+                    </ion-label>
+                </div>  
+                
+            </ion-card-content>
+        </ion-card>    
+    </div>
+</ion-content>

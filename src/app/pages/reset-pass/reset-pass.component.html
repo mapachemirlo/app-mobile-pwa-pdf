@@ -1,0 +1,84 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title class="encabezado ion-text-wrap ion-text-center">
+            Nueva contraseña
+        </ion-title>
+
+        <ion-buttons slot="start">
+            <ion-button (click)="openMenu()">
+                <ion-icon color="light" slot="icon-only" name="ellipsis-horizontal-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+
+        <ion-buttons slot="end">
+            <ion-button [routerLink]="['/perfil']">
+                <ion-icon color="light" slot="icon-only" name="person-circle-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+
+
+<ion-content>
+    
+    <div *ngIf="enableForm">
+        <!--volver atrás-->
+        <ion-buttons class="back" slot="start">
+            <ion-button [routerLink]="['/perfil']">
+                <ion-icon name="arrow-back-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    
+        <h3 class="subtitulo encabezado ion-text-center ion-margin">Restablecer contraseña</h3>        
+    </div>
+
+
+    <!--Ingresar email-->
+    <form class="ion-padding-top ion-padding-start ion-padding-end" *ngIf="enableForm" (submit)="sendLinkReset()">
+        <p class="ion-text-center ion-padding-start ion-padding-end ion-padding-bottom">
+            Por favor ingrese el email con el que desea ingresar
+        </p>
+        <ion-item>
+            <ion-label color="danger" position="floating">
+                Email
+            </ion-label>
+            <ion-input name="email" [(ngModel)]="email" type="email" inputmode="text" placeholder="ejemplo@gmail.com">
+            </ion-input>
+        </ion-item>
+        
+        <ion-button
+        class="ion-margin-top"
+        expand="full"
+        fill="solid" 
+        color="danger"  type="submit">
+            Enviar
+        </ion-button>
+    </form>
+
+
+
+    <!--envio exitoso-->
+    <div class="ion-padding" *ngIf="!enableForm">
+        <ion-text color="danger">
+            <h3 class="encabezado ion-text-center">¡Env&iacute;o exitoso!</h3>
+        </ion-text>
+        
+        <p class="ion-text-center">
+            Hemos enviado instrucciones para restablecer tu contraseña al email que ingresaste.
+        </p>
+        <p class="ion-text-center">
+            <strong>Revisa la bandeja de entrada y la carpeta de spam.</strong>
+        </p>
+        
+        <ion-button
+        class="ion-margin-top"
+        expand="full"
+        fill="solid" 
+        color="danger"
+        [routerLink]="['/']">
+            Volver al inicio
+        </ion-button>
+    </div>
+
+</ion-content>

@@ -1,0 +1,258 @@
+<!-------------INICIO TOOLBAR ---------------->
+<ion-header>
+    <ion-toolbar>
+        <ion-title class="subtitulo ion-text-wrap ion-text-center">
+            Ficha t&eacute;cnica
+        </ion-title>
+
+        <ion-buttons slot="start">
+            <ion-button (click)="openMenu()">
+                <ion-icon color="light" slot="icon-only" name="ellipsis-horizontal-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <ion-buttons slot="end">
+            <ion-button (click)="nuevo(); enableViewDocs = true">
+                <ion-icon color="light" slot="icon-only" name="add-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+<!-------------FIN TOOLBAR ---------------->
+
+
+
+<ion-content>
+
+    <div *ngIf="!uid.length">
+        <p>Debe estar logueado para ver esto</p>
+    </div>
+
+    <div *ngIf="uid.length">
+
+        <!-------------INICIO DATOS DE LA FICHA (CREAR O EDITAR) ---------------->
+        <div *ngIf="enableNewFicha">
+
+            <ion-buttons class="back" slot="start">
+                <ion-button (click)="enableNewFicha = false; enableViewDocs = false">
+                    <ion-icon name="arrow-back-outline"></ion-icon>
+                </ion-button>
+            </ion-buttons>
+
+            <h3 class="subtitulo encabezado ion-text-center ion-margin">Datos de la ficha</h3>
+
+            <div style="border-bottom: 1px solid #dedede;">
+                <div class="ion-padding">
+                    <ion-label color="danger">Cliente</ion-label>
+                    <ion-card class="card-select">
+
+                        <ion-select (ionChange)="selectCliente($event)" placeholder="Seleccionar" interface="popover">
+                            <ion-select-option *ngFor="let cliente of clientes" [value]="cliente">{{cliente.nombre}} {{cliente.apellido}}</ion-select-option>
+                        </ion-select>
+                    </ion-card>
+                </div>
+            </div>
+
+            <ion-item *ngIf="enableClienteRead">
+                <ion-label color="danger" position="floating">
+                    Cliente
+                </ion-label>
+                <div *ngIf="newFicha.cliente.nombre === null || newFicha.cliente.apellido === null">
+                    <p>Por favor asigne un nombre de cliente a la ficha</p>
+                </div>
+                <div *ngIf="newFicha.cliente.nombre === undefined || newFicha.cliente.apellido === undefined">
+                    <p>Por favor asigne un nombre de cliente a la ficha</p>
+                </div>
+                <div *ngIf="newFicha.cliente.nombre !== undefined || newFicha.cliente.apellido !== undefined">
+                    <ion-input [(ngModel)]="newFicha.cliente.nombre + ' ' + newFicha.cliente.apellido" type="text" inputmode="text" placeholder="Alfombra Europea">
+                    </ion-input>
+                </div>
+            </ion-item>
+
+            <ion-item>
+                <ion-label color="danger" position="floating">
+                    Nombre de alfombra
+                </ion-label>
+                <ion-input [(ngModel)]="newFicha.nombre" type="text" inputmode="text" placeholder="Alfombra Europea">
+                </ion-input>
+            </ion-item>
+
+            <ion-item>
+                <ion-label color="danger" position="floating">
+                    Medida orilla
+                </ion-label>
+                <ion-input [(ngModel)]="newFicha.medidaOrilla" type="number" placeholder="3" inputmode="numeric">
+                </ion-input>
+            </ion-item>
+
+            <ion-item>
+                <ion-label color="danger" position="floating">
+                    Medida fleco
+                </ion-label>
+                <ion-input [(ngModel)]="newFicha.medidaFleco" type="number" placeholder="4" inputmode="numeric">
+                </ion-input>
+            </ion-item>
+
+            <!-------------foto alfombra (subir) ---------------->
+            <ion-item lines="full">
+                <ion-label color="danger">
+                    Foto de alfombra
+                </ion-label>
+
+                <ion-buttons slot="end">
+                    <ion-button>
+                        <label for="file-upload-image">
+                        <ion-icon slot="icon-only" name="images-outline"></ion-icon>
+                    </label>
+                        <input (change)="newImageUpload($event)" id="file-upload-image" style="display: none" type="file" accept="image/*">
+                    </ion-button>
+                </ion-buttons>
+            </ion-item>
+            <!-------------foto alfombra (subir) ---------------->
+
+
+
+            <!-------------foto alfombra (ver) ---------------->
+            <div class="ion-text-center ion-margin">
+                <img class="image" [src]="newFicha.image">
+            </div>
+            <!-------------foto alfombra (ver) ---------------->
+
+
+            <ion-item>
+                <ion-label color="danger" position="floating">
+                    Descripci&oacute;n
+                </ion-label>
+                <ion-textarea [(ngModel)]="newFicha.descripcion" type="text" placeholder="El campo est&aacute; dominado por un medall&oacute;n" inputmode="text">
+                </ion-textarea>
+            </ion-item>
+
+            <!-- NO BORRAR, PUEDE SERVIR MÁS ADELANTE -->
+            <!-- <ion-item>
+            <ion-label color="danger">
+                Adjuntar archivo (.doc)
+            </ion-label>
+            <ion-buttons slot="end">
+                <ion-button>
+                    <label for="file-upload-doc">
+                   <ion-icon slot="icon-only" name="document-outline"></ion-icon>
+                 </label>
+                    <input (change)="newDocUpload($event)" id="file-upload-doc" style="display: none" type="file">
+                </ion-button>
+            </ion-buttons>
+        </ion-item> -->
+            <!-- <ion-item *ngIf="newFicha.fileDOC.length">
+            <a [href]="newFicha.fileDOC">Descargar .doc</a>
+        </ion-item> -->
+
+            <div class="ion-text-center ion-margin-top ion-margin-bottom">
+                <ion-button style="margin-right: 3%;" color="danger" fill="outline" (click)="enableNewFicha = false; enableViewDocs = false">
+                    cancelar
+                    <ion-icon color="danger" slot="start" name="close"></ion-icon>
+                </ion-button>
+
+                <ion-button color="danger" (click)="guardarFicha()">
+                    guardar
+                    <ion-icon color="light" slot="start" name="save-outline"></ion-icon>
+                </ion-button>
+            </div>
+        </div>
+        <!-------------FIN DATOS DE LA FICHA (CREAR O EDITAR) ---------------->
+
+
+
+        <!-------------INICIO DOCUMENTOS (VER Y SUBIR) ---------------->
+        <div style="border-bottom: 1px solid #dedede;" class="ion-padding-bottom" *ngIf="!enableViewDocs">
+            <ion-text color="danger">
+                <h3 class="subtitulo encabezado ion-text-center ion-margin">Documentos</h3>
+            </ion-text>
+
+            <div>
+
+                <!--Ver lista de documentos-->
+                <div *ngIf="!enableViewDocs" class="ion-padding">
+                    <ion-button (click)="getDocumentosFichas(); enableViewDocs = true" expand="full" class="normal" color="light">
+                        Ver lista de documentos
+                        <ion-icon slot="end" name="chevron-forward-outline"></ion-icon>
+                    </ion-button>
+                </div>
+
+
+                <!--subir nuevo documento-->
+                <div *ngIf="!enableViewDocs" class="ion-padding-start ion-padding-end ion-padding-bottom">
+                    <ion-button *ngIf="admin" expand="full" class="normal" color="danger">
+
+                        <label style="width:100%;" for="file-upload-doc">
+                        Subir nuevo .doc                        
+                    </label>
+                        <input (change)="newDocUpload($event)" id="file-upload-doc" style="display: none" type="file">
+                    </ion-button>
+                </div>
+
+            </div>
+
+        </div>
+        <!-------------FIN DOCUMENTOS (VER Y SUBIR) ---------------->
+
+
+
+        <div *ngIf="!enableNewFicha">
+            <!-------------INICIO LISTA DE FICHAS ---------------->
+            <div *ngIf="!enableViewDocs">
+                <ion-text color="danger">
+                    <h3 class="subtitulo encabezado ion-text-center ion-margin">Lista de Fichas</h3>
+                </ion-text>
+                <ion-item *ngFor="let ficha of fichas">
+                    <ion-label> {{ficha.nombre}}</ion-label>
+                    <ion-buttons slot="end">
+                        <ion-button (click)=" newFicha =  ficha; enableNewFicha = true; enableClienteRead = true; enableViewDocs = true">
+                            <ion-icon slot="icon-only" color="dark" name="create-outline"></ion-icon>
+                        </ion-button>
+                        <ion-button (click)="deleteFicha(ficha)">
+                            <ion-icon slot="icon-only" color="danger" name="trash-outline"></ion-icon>
+                        </ion-button>
+                    </ion-buttons>
+                </ion-item>
+            </div>
+            <!-------------FIN LISTA DE FICHAS ---------------->
+
+
+
+            <!-------------INICIO LISTA DE DOCUMENTOS ---------------->
+            <div *ngIf="enableViewDocs">
+                <ion-buttons class="back" slot="start">
+                    <ion-button (click)="enableViewDocs = false">
+                        <ion-icon name="arrow-back-outline"></ion-icon>
+                    </ion-button>
+                </ion-buttons>
+                <h3 class="ion-text-center">Lista de Documentos</h3>
+                <ion-item lines="full" *ngFor="let documento of documentoFichas">
+                    <a [href]="documento.doc" style="text-decoration: none;" color="medium">{{documento.nombre}}</a>
+                </ion-item>
+            </div>
+            <!-------------FIN LISTA DE DOCUMENTOS ---------------->
+
+        </div>
+
+        <!--version vieja de lista de fichas 
+        <div *ngIf="!enableNewFicha">
+        <ion-text color="danger">
+            <h3 class="subtitulo encabezado ion-text-center ion-margin">Lista de Fichas</h3>
+        </ion-text>
+
+        <ion-item *ngFor="let ficha of fichas">
+            <ion-label> {{ficha.nombre}}</ion-label>
+            <ion-buttons slot="end">
+                <ion-button (click)=" newFicha =  ficha; enableNewFicha = true; enableClienteRead = true  ">
+                    <ion-icon slot="icon-only" color="dark" name="create-outline"></ion-icon>
+                </ion-button>
+                <ion-button (click)="deleteFicha(ficha)">
+                    <ion-icon slot="icon-only" color="danger" name="trash-outline"></ion-icon>
+                </ion-button>
+            </ion-buttons>
+        </ion-item>
+    </div> -->
+
+    </div>
+
+
+</ion-content>

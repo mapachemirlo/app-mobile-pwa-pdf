@@ -1,0 +1,34 @@
+<!-- <ion-card>
+    <ion-row>
+        <ion-item>
+            <ion-label>{{servicioSolicitado.servicio.nombre}} {{servicioSolicitado.servicio.tipo}}</ion-label>
+        </ion-item>
+    </ion-row>
+    
+    <ion-row>
+
+        <ion-item>
+            <ion-label>Precio: ${{servicioSolicitado.servicio.precioTotalServicio}}</ion-label>
+        </ion-item>
+        <ion-buttons *ngIf="botones">
+            <ion-button (click)="removeServicio()">
+                <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-row>
+
+</ion-card> -->
+
+<ion-card>
+    <ion-item>
+        <ion-label><strong> {{servicioSolicitado.servicio.nombre}} </strong> <br>
+            <p color="medium">{{servicioSolicitado.servicio.tipo}}</p>
+        </ion-label>
+        <ion-label color="danger" class="ion-align-self-start"><strong>${{servicioSolicitado.servicio.precioTotalServicio}}</strong></ion-label>
+        <ion-buttons *ngIf="botones" slot="end">
+            <ion-button (click)="removeServicio()">
+                <ion-icon slot="icon-only" color="danger" name="trash-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-item>
+</ion-card>    

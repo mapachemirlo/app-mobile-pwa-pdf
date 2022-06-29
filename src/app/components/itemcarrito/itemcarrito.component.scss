@@ -1,0 +1,22 @@
+.imagen{
+    width: 40%;
+    ion-img{
+        height: 100px;
+    }
+}
+.producto-texto{
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.botones{
+    // border-top: 1px solid #dedede;
+    ion-buttons{
+        justify-content: center;
+        align-items: center;
+        ion-text{
+            padding: 0px 5%;
+        }
+    }    
+}

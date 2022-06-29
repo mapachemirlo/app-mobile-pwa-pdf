@@ -1,0 +1,117 @@
+<ion-header>
+
+    <ion-toolbar>
+
+        <ion-title class="encabezado ion-text-wrap ion-text-center">
+            Mis Presupuestos
+        </ion-title>
+
+        <ion-buttons slot="start">
+            <ion-button (click)="openMenu()">
+                <ion-icon color="light" slot="icon-only" name="ellipsis-horizontal-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+
+        <ion-buttons slot="end">
+            <ion-button [routerLink]="['/perfil']">
+                <ion-icon slot="icon-only" name="person-circle-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+
+    </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content>
+    <ion-card *ngIf="uid === ''" class="ion-text-center ion-padding">
+        <ion-card-header>
+            <p class="ion-text-wrap text-inicia-sesion">Inicia sesión para ver esta secci&oacute;n</p>
+        </ion-card-header>
+        <ion-card-content class="ion-no-padding">
+            <ion-button expand="full" fill="solid" color="danger" [routerLink]="['/perfil']">
+                Acceder
+            </ion-button>
+        </ion-card-content>
+    </ion-card>
+
+
+    <ion-card *ngFor="let presupuesto of presupuestos" class="card ion-margin-top">
+        <ion-item lines="full">
+            <ion-card-header class="ion-text-center">
+                <ion-card-title>
+                    <ion-text class="presupuesto-number" color="danger">
+                        <strong>Presupuesto N° {{presupuesto.numeroCodigo}}</strong>
+                    </ion-text>
+                </ion-card-title>                
+            </ion-card-header>
+        </ion-item>
+
+        <ion-card-content>
+            <div class="ion-padding">
+                <div class="resumen">
+                    <ion-label color="medium">
+                        Fecha
+                    </ion-label>
+                    <ion-label>
+                        <strong>{{presupuesto.fecha.seconds * 1000 | date}}</strong>
+                    </ion-label>
+                </div>
+                <div class="resumen">
+                    <ion-label color="medium">
+                        Cliente
+                    </ion-label>
+                    <ion-label>
+                        <strong>{{presupuesto.cliente.nombre}} {{presupuesto.cliente.apellido}}</strong>
+                    </ion-label>
+                </div>
+                <div class="resumen">
+                    <ion-label color="medium">
+                        Ficha
+                    </ion-label>
+                    <ion-label>
+                        <strong>{{presupuesto.ficha.nombre}}</strong>
+                    </ion-label>
+                </div>
+                <div class="resumen ion-margin-bottom">
+                    <ion-label color="medium">
+                        Total
+                    </ion-label>
+                    <ion-label>
+                        <strong>${{presupuesto.precioTotal}}</strong>
+                    </ion-label>
+                </div>
+
+                <ion-grid>
+                    <ion-row>
+                        <ion-col>
+                            <div>
+                                <ion-label color="medium">
+                                    Observaciones
+                                </ion-label>
+                            </div>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col>
+                            <ion-label>
+                                {{presupuesto.observacion}}
+                            </ion-label>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </div>            
+
+            
+                <a [href]="presupuesto.filePDF" style="text-decoration: none;">
+                    <ion-button expand="full" class="normal" color="danger">
+                        Descargar PDF
+                        <ion-icon slot="start" color="light" name="chevron-down-circle-outline"></ion-icon>
+                    </ion-button>
+                </a>
+            
+            
+        </ion-card-content>
+    </ion-card>
+
+</ion-content>

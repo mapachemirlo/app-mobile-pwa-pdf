@@ -1,0 +1,228 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title class="subtitulo ion-text-wrap ion-text-center">
+            Presupuestos
+        </ion-title>
+        <ion-buttons slot="start">
+            <ion-button (click)="openMenu()">
+                <ion-icon slot="icon-only" name="ellipsis-horizontal-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <ion-buttons slot="end">
+            <ion-button [routerLink]="['/perfil']">
+                <ion-icon slot="icon-only" name="person-circle-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+    <!-- BOTON PIOLA PARA MOSTRAR SECCION DE ARCHIVOS PDF -->
+    <div *ngIf="!enableViewPDF">
+        <ion-button (click)="getDocsPDF(); enableViewPDF = true; enableViewALL = false">
+            Ver lista de PDFs
+        </ion-button>
+    </div>
+
+    <!--- MOSTRAR LISTA PDF'S y VOLVER PA ATRAS -->
+    <div *ngIf="enableViewPDF">
+        <ion-buttons class="back" slot="start">
+            <ion-button (click)="enableViewPDF = false; enableViewALL = true">
+                <ion-icon name="arrow-back-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <h3 class="ion-text-center">Lista de archivos PDF</h3>
+        <ion-item *ngFor="let pdf of pdfLista">
+            <a [href]="pdf.url_download">{{pdf.title}} | {{pdf.description}}</a>
+        </ion-item>
+    </div>
+
+    <!-- MOSTRAR TODO EL CONTENIDO RESTANTE -->
+    <div *ngIf="enableViewALL">
+        <div class="m-3">
+            <ion-segment color="danger" (ionChange)="changeSegment($event)" value="abiertos">
+                <ion-segment-button value="abiertos">
+                    <ion-label>Abiertos</ion-label>
+                </ion-segment-button>
+                <ion-segment-button value="cerrados">
+                    <ion-label>Cerrados</ion-label>
+                </ion-segment-button>
+            </ion-segment>
+        </div>
+
+        <div *ngIf="mostrar">
+            <ion-card *ngFor="let presupuesto of presupuestosAbiertos" class="ion-margin-bottom ion-margin-top">
+                <ion-item lines="full">
+                    <ion-card-header>
+                        <ion-card-title>
+                            <ion-text class="estado-titulo" color="danger">
+                                <strong>Estado {{presupuesto.estado}}</strong>
+                            </ion-text>
+                        </ion-card-title>
+                    </ion-card-header>
+                </ion-item>
+
+                <ion-card-content>
+                    <div class="ion-padding">
+
+                        <div class="resumen">
+                            <ion-label color="medium">
+                                Fecha
+                            </ion-label>
+                            <ion-label>
+                                <strong>{{presupuesto.fecha.seconds * 1000 | date}}</strong>
+                            </ion-label>
+                        </div>
+
+                        <div class="resumen">
+                            <ion-label color="medium">
+                                Cliente
+                            </ion-label>
+                            <ion-label>
+                                <strong>{{presupuesto.cliente.nombre}} {{presupuesto.cliente.apellido}}</strong>
+                            </ion-label>
+                        </div>
+
+                        <div class="resumen">
+                            <ion-label color="medium">
+                                Ficha
+                            </ion-label>
+                            <ion-label>
+                                <strong>{{presupuesto.ficha.nombre}}</strong>
+                            </ion-label>
+                        </div>
+
+                        <div class="resumen">
+                            <ion-label color="medium">
+                                Vendedor
+                            </ion-label>
+                            <ion-label>
+                                <strong>{{presupuesto.usuario.nombre}} {{presupuesto.usuario.apellido}}</strong>
+                            </ion-label>
+                        </div>
+
+                        <div class="resumen">
+                            <ion-label color="medium">
+                                Total
+                            </ion-label>
+                            <ion-label>
+                                <strong>${{presupuesto.precioTotal}}</strong>
+                            </ion-label>
+                        </div>
+
+                    </div>
+
+                    <div class="ion-margin-bottom" *ngIf="presupuesto.filePDF.length">
+                        <a [href]="presupuesto.filePDF" style="text-decoration: none;">
+                            <ion-button expand="full" class="normal" color="danger">
+                                Descargar PDF
+                                <ion-icon slot="start" color="light" name="chevron-down-circle-outline"></ion-icon>
+                            </ion-button>
+                        </a>
+                    </div>
+
+                    <div style="border-top: 1px solid #dedede;">
+                        <div class="ion-padding ">
+                            <ion-label color="danger">Cambiar estado</ion-label>
+                            <ion-card class="card-select">
+                                <ion-select (ionChange)="cambiarEstado(presupuesto, $event)" [value]="presupuesto.estado" interface="popover">
+                                    <ion-select-option *ngFor="let estado of estados" [value]="estado">{{estado}}</ion-select-option>
+                                </ion-select>
+                            </ion-card>
+                        </div>
+                    </div>
+
+                </ion-card-content>
+            </ion-card>
+        </div>
+
+        <div *ngIf="!mostrar">
+            <ion-card *ngFor="let presupuesto of presupuestosCerrados" class="ion-margin-bottom ion-margin-top">
+                <ion-item lines="full">
+                    <ion-card-header>
+                        <ion-card-title>
+                            <ion-text class="estado-titulo" color="danger">
+                                <strong>Estado {{presupuesto.estado}}</strong>
+                            </ion-text>
+                        </ion-card-title>
+                    </ion-card-header>
+                </ion-item>
+
+                <ion-card-content>
+                    <div class="ion-padding">
+
+                        <div class="resumen">
+                            <ion-label color="medium">
+                                Fecha
+                            </ion-label>
+                            <ion-label>
+                                <strong>{{presupuesto.fecha.seconds * 1000 | date}}</strong>
+                            </ion-label>
+                        </div>
+
+                        <div class="resumen">
+                            <ion-label color="medium">
+                                Cliente
+                            </ion-label>
+                            <ion-label>
+                                <strong>{{presupuesto.cliente.nombre}} {{presupuesto.cliente.apellido}}</strong>
+                            </ion-label>
+                        </div>
+
+                        <div class="resumen">
+                            <ion-label color="medium">
+                                Ficha
+                            </ion-label>
+                            <ion-label>
+                                <strong>{{presupuesto.ficha.nombre}}</strong>
+                            </ion-label>
+                        </div>
+
+                        <div class="resumen">
+                            <ion-label color="medium">
+                                Vendedor
+                            </ion-label>
+                            <ion-label>
+                                <strong>{{presupuesto.usuario.nombre}} {{presupuesto.usuario.apellido}}</strong>
+                            </ion-label>
+                        </div>
+
+                        <div class="resumen">
+                            <ion-label color="medium">
+                                Total
+                            </ion-label>
+                            <ion-label>
+                                <strong>${{presupuesto.precioTotal}}</strong>
+                            </ion-label>
+                        </div>
+                    </div>
+
+                    <div class="ion-margin-bottom" *ngIf="presupuesto.filePDF.length">
+                        <a [href]="presupuesto.filePDF" style="text-decoration: none;">
+                            <ion-button expand="full" class="normal" color="danger">
+                                Descargar PDF
+                                <ion-icon slot="start" color="light" name="chevron-down-circle-outline"></ion-icon>
+                            </ion-button>
+                        </a>
+                    </div>
+
+                    <div style="border-top: 1px solid #dedede;">
+                        <div class="ion-padding ">
+                            <ion-label color="danger">Cambiar estado</ion-label>
+                            <ion-card class="card-select">
+                                <ion-select (ionChange)="cambiarEstado(presupuesto, $event)" [value]="presupuesto.estado" okText="OK" cancelText="Cancelar" interface="popover">
+                                    <ion-select-option *ngFor="let estado of estados" [value]="estado">{{estado}}</ion-select-option>
+                                </ion-select>
+                            </ion-card>
+                        </div>
+                    </div>
+
+                </ion-card-content>
+            </ion-card>
+        </div>
+
+    </div>
+
+
+</ion-content>

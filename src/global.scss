@@ -1,0 +1,103 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "~@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "~@ionic/angular/css/normalize.css";
+@import "~@ionic/angular/css/structure.css";
+@import "~@ionic/angular/css/typography.css";
+@import '~@ionic/angular/css/display.css';
+
+/* Optional CSS utils that can be commented out */
+@import "~@ionic/angular/css/padding.css";
+@import "~@ionic/angular/css/float-elements.css";
+@import "~@ionic/angular/css/text-alignment.css";
+@import "~@ionic/angular/css/text-transformation.css";
+@import "~@ionic/angular/css/flex-utils.css";
+
+/*fuente raleway*/
+@font-face {
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 300;
+    font-display: swap;
+    src: url(assets/fonts/Raleway-Light.ttf);
+}
+
+@font-face {
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url(assets/fonts/Raleway-Medium.ttf);
+}
+
+@font-face {
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url(assets/fonts/Raleway-SemiBold.ttf);
+}
+
+*{
+    font-family: 'Raleway' !important;
+}
+
+.encabezado{
+    font-family: 'Raleway', sans-serif;
+    font-weight: 600;
+}
+
+ion-toolbar{
+    --background: linear-gradient(90deg, #ed576b 0%, #eb445a 35%, #cf3c4f 100%);
+    border: 1px solid #cf3c4f;
+    color: #ffffff;
+    ion-title{
+        font-weight: 600;
+    }
+}
+
+.back{
+    margin: 2% 0 0 3%;
+    color: #eb445a;
+}
+
+.image{
+    width: 190px;
+    border-radius: 4px;
+}
+.advertencia > .alert-wrapper > .alert-head > .alert-title{
+    color: #cf3c4f;
+    text-align: center;
+    border-bottom: 1px solid #d9d9d9;
+    padding-bottom: 5%;
+}
+.advertencia > .alert-wrapper > .alert-message{
+    text-align: center;
+}
+
+.advertencia > .alert-wrapper > .alert-button-group{
+    justify-content: center;
+}
+.guardando{
+    font-size: 8rem;
+}
+.cancelar > span{
+    color: #cf3c4f;
+}
+
+.confirmar > span{
+    color: #000000;
+    margin-right: 0;
+}
